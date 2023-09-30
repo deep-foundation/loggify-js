@@ -27,7 +27,40 @@ async function loggify(filePath) {
   });
 }
 
-parentNode.body.splice(parentNode.body.indexOf(node[key]), 0, logStatement);
+function traverseAndLog(node) {
+  for (let key in node) {
+    if (node[key] && typeof node[key] === 'object') {
+      if (node[key].type === 'ExpressionStatement') {
+        const logStatement = {
+          type: 'ExpressionStatement',
+          expression: {
+            type: 'CallExpression',
+            callee: {
+              type: 'MemberExpression',
+              computed: false,
+              object: {
+                type: 'Identifier',
+                name: 'console'
+              },
+              property: {
+                type: 'Identifier',
+                name: 'log'
+              }
+            },
+            arguments: [
+              {
+                type: 'Literal',
+                value: 'Statement executed'
+              }
+            ]
+          }
+        };
+        node.body.splice(node.body.indexOf(node[key]), 0, logStatement);
+      }
+      traverseAndLog(node[key]);
+    }
+  }
+}
 
 // Get the file argument from the command line
 const fileArg = process.argv[2];
