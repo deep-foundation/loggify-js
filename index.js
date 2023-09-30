@@ -3,7 +3,15 @@
 const fs = require('fs');
 const readline = require('readline');
 
-function loggify(filePath) {
+#!/usr/bin/env node
+
+const fs = require('fs');
+const readline = require('readline');
+const util = require('util');
+
+const writeFile = util.promisify(fs.writeFile);
+
+async function loggify(filePath) {
   const readInterface = readline.createInterface({
     input: fs.createReadStream(filePath),
     output: process.stdout,
@@ -16,8 +24,8 @@ function loggify(filePath) {
     fileContent += line + '\nconsole.log(\'' + line + '\');\n';
   });
   
-  readInterface.on('close', function() {
-    fs.writeFileSync(filePath, fileContent);
+  readInterface.on('close', async function() {
+    await writeFile(filePath, fileContent);
   });
 }
 
