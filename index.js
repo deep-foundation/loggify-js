@@ -27,7 +27,7 @@ async function loggify(filePath) {
   });
 }
 
-function traverseAndLog(node) {
+function traverseAndLog(node, parentNode) {
   for (let key in node) {
     if (node[key] && typeof node[key] === 'object') {
       if (node[key].type === 'ExpressionStatement') {
@@ -55,9 +55,9 @@ function traverseAndLog(node) {
             ]
           }
         };
-        node.body.splice(node.body.indexOf(node[key]) + 1, 0, logStatement);
+        parentNode.body.splice(parentNode.body.indexOf(node[key]) + 1, 0, logStatement);
       }
-      traverseAndLog(node[key]);
+      traverseAndLog(node[key], node);
     }
   }
 }
