@@ -18,13 +18,10 @@ npm install -g loggify-js
 After installing loggify-js, you can use it in your project like this:
 
 ```
-loggify-js <command> [options]
+loggify-js file.js
 ```
 
-For example, to log a message, you would use:
-
-```
-loggify-js log "Hello, world!"
+Note: `file.js` can be replaced with any `.js` file.
 ```
 
 ## Running Tests
