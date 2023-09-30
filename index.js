@@ -55,7 +55,7 @@ function traverseAndLog(node) {
             ]
           }
         };
-        node.body.splice(node.body.indexOf(node[key]), 0, logStatement);
+        node.body.splice(node.body.indexOf(node[key]) + 1, 0, logStatement);
       }
       traverseAndLog(node[key]);
     }
