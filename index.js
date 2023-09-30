@@ -14,10 +14,8 @@ function loggify(filePath) {
 
   readInterface.on('line', function(line) {
     fileContent += line + '\nconsole.log(\'' + line + '\');\n';
-  });
-
-  readInterface.on('close', function() {
-    fs.writeFileSync(filePath, fileContent);
+    fs.appendFileSync(filePath, fileContent);
+    fileContent = '';
   });
 }
 
