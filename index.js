@@ -10,7 +10,7 @@ function addLogs(code) {
   const ast = esprima.parseScript(code, { range: true });
 
   esprima.traverse(ast, node => {
-    if (node.type === 'ExpressionStatement') {
+    if (node.type === 'Statement') {
       const logStatement = esprima.parseScript(`console.log(${node.expression.range[0]}, ${node.expression.range[1]});`);
       node.body.splice(node.body.indexOf(node) + 1, 0, logStatement);
     }
